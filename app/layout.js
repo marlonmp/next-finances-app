@@ -20,8 +20,8 @@ export default function RootLayout({ children }) {
 
               <nav className='flex flex-row flex-grow space-x-4'>
                 <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950 text-slate-200'>Home</a>
-                <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950'>Months</a>
-                <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950'>Balance</a>
+                <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950'>Transactions</a>
+                <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950'>Statistics</a>
               </nav>
             </div>
           </div>
