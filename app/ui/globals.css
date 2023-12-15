@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 245, 245, 245;
+  --background-start-rgb: 2, 2, 2;
+  --background-end-rgb: 20,20,20;
+}
+
+body {
+  color: theme('colors.slate.200');
+
+  background: theme('colors.neutral.950');
+  background: linear-gradient(150deg, theme('colors.neutral.950') 0%, theme('colors.slate.900') 100%);
+
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  height: 100%;
+}
