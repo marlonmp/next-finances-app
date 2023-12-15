@@ -16,6 +16,8 @@ export default function RootLayout({ children }) {
 
               <div className='font-black text-2xl'>Finances</div>
 
+              <div className='h-8 w-px bg-slate-200'></div>
+
               <nav className='flex flex-row flex-grow space-x-4'>
                 <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950 text-slate-200'>Home</a>
                 <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950'>Months</a>
