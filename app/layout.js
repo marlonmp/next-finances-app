@@ -1,36 +1,29 @@
-import '@/app/ui/globals.css'
+import '@/styles/globals.css';
+
+import HeaderLink from '@/app/compoents/HeaderLink';
+import Header from './compoents/Header';
 
 export const metadata = {
   title: 'Finances',
   description: 'A finances app to manage the monthly incomes and expenses',
-}
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
-
       <body>
-        <header className='bg-slate-900'>
-          <div className='w-11/12 lg:w-1/2 mx-auto'>
-            <div className='h-20 flex items-center space-x-6'>
 
-              <div className='font-black text-2xl'>Finances</div>
-
-              <div className='h-8 w-px bg-slate-200'></div>
-
-              <nav className='flex flex-row flex-grow space-x-4'>
-                <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950 text-slate-200'>Home</a>
-                <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950'>Transactions</a>
-                <a className='px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950'>Statistics</a>
-              </nav>
-            </div>
-          </div>
-        </header>
+        <Header title='Finances'>
+          <HeaderLink label='Home' href='/home'/>
+          <HeaderLink label='Transactions' href='/transactions'/>
+          <HeaderLink label='Statistics' href='/statistics'/>
+        </Header>
 
         <div className='w-11/12 lg:w-1/2 mx-auto mt-12'>
           {children}
         </div>
+
       </body>
     </html>
-  )
-}
+  );
+};
