@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 
-import HeaderLink from '@/app/compoents/HeaderLink';
-import Header from './compoents/Header';
+import HeaderLink from '@/app/components/HeaderLink';
+import Header from '@/app/components/Header';
 
 export const metadata = {
   title: 'Finances',

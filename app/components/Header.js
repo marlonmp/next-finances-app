@@ -1,5 +1,3 @@
-import stryles from '@/styles/components.module.css';
-
 export default function Header({ title, children }) {
   return <>
     <header className='bg-slate-900'>
