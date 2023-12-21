@@ -4,9 +4,9 @@ services:
 
   psql:
     container_name: finances-psql
-    image: postgres:16-alpine
+    image: postgres:${POSTGRES_VERSION}
     env_file:
-      - ./.env.local
+      - .env
     volumes:
       - postgres:/var/lib/postgresql
 
