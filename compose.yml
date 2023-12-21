@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+
+  psql:
+    container_name: finances-psql
+    image: postgres:16-alpine
+    env_file:
+      - ./.env.local
+    volumes:
+      - postgres:/var/lib/postgresql
+
+volumes:
+  postgres:
