@@ -10,5 +10,18 @@ services:
     volumes:
       - postgres:/var/lib/postgresql
 
+  app:
+    container_name: finances-next-js
+    build:
+      context: .
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+        NODE_ENV: ${NODE_ENV}
+        NODE_PORT: ${NODE_PORT}
+    env_file:
+      - .env
+    ports:
+      - 3000:${NODE_PORT}
+
 volumes:
   postgres:
