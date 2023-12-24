@@ -19,13 +19,13 @@ enum accounttype {
 model account {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  name       String      @db.VarChar(32)
-  type       accounttype
+  name String      @db.VarChar(32)
+  type accounttype
 
   transactions transaction[]
 
-  created_at DateTime    @default(now())
-  updated_at DateTime    @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 // transaction
@@ -33,12 +33,12 @@ model account {
 model tag {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  name String @db.VarChar(32) @unique
+  name String @unique @db.VarChar(32)
 
   transactions transaction_tag[]
 
-  created_at DateTime    @default(now())
-  updated_at DateTime    @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 enum transactiontype {
@@ -49,29 +49,29 @@ enum transactiontype {
 model transaction {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  account account @relation(fields: [account_id], references: [id])
-  account_id String @db.Uuid
+  account    account @relation(fields: [account_id], references: [id])
+  account_id String  @db.Uuid
 
-  reference String @db.VarChar(64)
-  amount Decimal @db.Decimal(11, 2)
-  date DateTime @db.Date
+  reference String   @db.VarChar(64)
+  amount    Decimal  @db.Decimal(11, 2)
+  date      DateTime @db.Date
 
   type transactiontype
 
   tags transaction_tag[]
 
-  created_at DateTime    @default(now())
-  updated_at DateTime    @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model transaction_tag {
-  transaction transaction @relation(fields: [transaction_id], references: [id])
-  transaction_id String @db.Uuid
+  transaction    transaction @relation(fields: [transaction_id], references: [id])
+  transaction_id String      @db.Uuid
 
-  tag tag @relation(fields: [tag_id], references: [id])
+  tag    tag    @relation(fields: [tag_id], references: [id])
   tag_id String @db.Uuid
 
-  added_at DateTime    @default(now())
+  added_at DateTime @default(now())
 
   @@id([transaction_id, tag_id])
 }
