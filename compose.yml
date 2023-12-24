@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  psql:
+    container_name: ${POSTGRES_HOST}
+    image: postgres:${POSTGRES_VERSION}
+    env_file:
+      - .env
+    ports:
+    - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgres:/var/lib/postgresql
+
+  app:
+    container_name: ${NODE_HOST}
+    depends_on:
+      - psql
+    build:
+      context: .
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+        NODE_ENV: ${NODE_ENV}
+        NODE_PORT: ${NODE_PORT}
+    env_file:
+      - .env
+    ports:
+      - 3000:${NODE_PORT}
+    volumes:
+      - ./:/app/
+
+volumes:
+  postgres:
