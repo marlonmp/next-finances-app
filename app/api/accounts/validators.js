@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 
 import { z } from 'zod';
 
-export const accountIdValidator = await z.string()
+export const accountIdValidator = z.string()
   .uuid()
   .transform(async id => await prisma.account.findUniqueOrThrow({ where: { id }}));
 
