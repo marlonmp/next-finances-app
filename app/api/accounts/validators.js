@@ -3,6 +3,9 @@ import prisma from '@/lib/prisma';
 
 import { z } from 'zod';
 
+export const accountIdValidator = await z.string()
+  .uuid()
+  .transform(async id => await prisma.account.findUniqueOrThrow({ where: { id }}));
 
 const name = z.string().trim().max(32);
 
