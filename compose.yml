@@ -10,7 +10,7 @@ services:
     ports:
     - ${POSTGRES_PORT}:5432
     volumes:
-      - postgres:/var/lib/postgresql
+      - postgres:/var/lib/postgresql/data
 
   app:
     container_name: ${NODE_HOST}
