@@ -13,7 +13,7 @@ const type = z.enum(Object.values(accounttype));
 
 export const accountFilterValidator = z.object({
   type__in: z.string()
-    .transform((types) => types.split(','))
+    .transform(types => types.split(','))
     .pipe(type.array()),
 });
 
