@@ -18,16 +18,16 @@ export const PUT = withErrorHandler(async function (req, { params }) {
 
   const data = await tagUpdateValidator.parseAsync(jsonData);
 
-  const updatedtag = await prisma.tag.update({ data, where: { id: tag.id } });
+  const updatedTag = await prisma.tag.update({ data, where: { id: tag.id } });
 
-  return Response.json({data: updatedtag}, {status: 200});
+  return Response.json({data: updatedTag}, {status: 200});
 });
 
 
 export const DELETE = withErrorHandler(async function (req, { params }) {
   const tag = await tagIdValidator.parseAsync(params.id);
 
-  const deletedtag = await prisma.tag.delete({ where: { id: tag.id } });
+  const deletedTag = await prisma.tag.delete({ where: { id: tag.id } });
 
-  return Response.json({data: deletedtag}, {status: 202});
+  return Response.json({data: deletedTag}, {status: 202});
 });
