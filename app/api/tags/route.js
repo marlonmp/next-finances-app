@@ -1,20 +1,20 @@
 import prisma from '@/lib/prisma';
+import * as status from '@/lib/http.status';
 import withErrorHandler from '@/lib/error.handler';
+import { getFilters, getOrdering, getPagination } from '@/lib/filters';
 
 import { tagCreateValidator, tagFilterValidator } from './validators';
-import { getFilters, getOrdering, getPagination } from '@/lib/filters';
 
 export const GET = withErrorHandler(async function (req) {
   const pagination = getPagination(req);
   const filters = await getFilters(req, tagFilterValidator);
   const ordering = getOrdering(req, ['created_at', 'updated_at']);
 
+  const count = await prisma.tag.count(filters);
+
   const tags = await prisma.tag.findMany({ ...pagination, ...ordering, ...filters });
 
-  return Response.json({
-    count: await prisma.tag.count(filters),
-    data: [...tags]
-  });
+  return Response.json({ count, data: [...tags] }, { status: status.HTTP_STATUS_OK });
 });
 
 export const POST = withErrorHandler(async function (req) {
@@ -24,5 +24,5 @@ export const POST = withErrorHandler(async function (req) {
 
   const tag = await prisma.tag.create({ data });
 
-  return Response.json({data: tag}, {status:201});
+  return Response.json({ data: tag }, { status: status.HTTP_STATUS_CREATED });
 });
