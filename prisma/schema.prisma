@@ -65,10 +65,10 @@ model transaction {
 }
 
 model transaction_tag {
-  transaction    transaction @relation(fields: [transaction_id], references: [id])
+  transaction    transaction @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
   transaction_id String      @db.Uuid
 
-  tag    tag    @relation(fields: [tag_id], references: [id])
+  tag    tag    @relation(fields: [tag_id], references: [id], onDelete: Cascade)
   tag_id String @db.Uuid
 
   added_at DateTime @default(now())
