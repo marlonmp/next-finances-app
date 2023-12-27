@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import * as status from '@/lib/http.status';
 import withErrorHandler from '@/lib/error.handler';
 
 import { accountIdValidator, accountUpdateValidator } from '../validators';
@@ -19,7 +20,7 @@ export const GET = withErrorHandler(async function (req, { params }) {
 
   const balance = (incomes || 0) - (expenses || 0);
 
-  return Response.json({data: {...account, balance}}, {status: 200});
+  return Response.json({data: { ...account, balance }}, { status: status.HTTP_STATUS_OK });
 });
 
 
@@ -39,7 +40,7 @@ function updateHandler(partial) {
 
     const updatedAccount = await prisma.account.update({ data, where: { id: account.id } });
 
-    return Response.json({data: updatedAccount}, {status: 200});
+    return Response.json({ data: updatedAccount }, { status: status.HTTP_STATUS_OK });
   });
 }
 
@@ -55,5 +56,5 @@ export const DELETE = withErrorHandler(async function (req, { params }) {
 
   const deletedAccount = await prisma.account.delete({ where: { id: account.id } });
 
-  return Response.json({data: deletedAccount}, {status: 202});
+  return Response.json({ data: deletedAccount }, { status: status.HTTP_STATUS_ACCEPTED });
 });
