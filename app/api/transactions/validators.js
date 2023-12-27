@@ -26,16 +26,14 @@ const type = z.enum(Object.values(transactiontype));
 const tags = z.string()
   .uuid()
   .transform(async id => await prisma.tag.findUnique({where: {id}}))
-  .refine(account => !!account, { message: 'Not tag found' })
-  .array();
-
-const tagsConnect = tags
-  .transform(tags => ({
-    create: [...tags.map(tag => ({
-      tag: { connect: { id: tag.id } }
-    }))]
-  }));
-
+  .refine(tag => !!tag, { message: 'Not tag found' })
+  .array()
+  // remove repeated objects
+  .transform(tags => {
+    const ids = tags.map(tag => tag.id);
+    return tags.filter((tag, i) => ids.indexOf(tag.id) === i);
+  })
+  .optional();
 
 export const transactionFilterValidator = z.object({
   account_id: account.transform(account => account.id),
@@ -65,7 +63,7 @@ export const transactionCreateValidator = z.object({
   amount,
   date,
   type,
-  tags: tagsConnect,
+  tags,
 });
 
 
@@ -74,5 +72,5 @@ export const transactionUpdateValidator = z.object({
   amount,
   date,
   type,
-  tags: tagsConnect,
+  tags,
 });
