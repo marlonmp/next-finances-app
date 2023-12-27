@@ -1,10 +1,11 @@
 import { z } from 'zod';
 
 import prisma from '@/lib/prisma';
+import * as status from '@/lib/http.status';
 import withErrorHandler from '@/lib/error.handler';
 
-import { transactionIdValidator, transactionUpdateValidator } from '../validators';
 import { transactionMapper } from '../mappers';
+import { transactionIdValidator, transactionUpdateValidator } from '../validators';
 
 
 export const GET = withErrorHandler(async function (req, { params }) {
@@ -17,7 +18,7 @@ export const GET = withErrorHandler(async function (req, { params }) {
 
   const data = transactionMapper(transaction);
 
-  return Response.json({ data }, {status: 200});
+  return Response.json({ data }, { status: status.HTTP_STATUS_OK });
 });
 
 
@@ -65,7 +66,7 @@ function updateHandler(partial) {
 
     const data = transactionMapper(updatedTransaction);
 
-    return Response.json({ data }, {status: 200});
+    return Response.json({ data }, { status: status.HTTP_STATUS_OK });
   });
 }
 
@@ -86,5 +87,5 @@ export const DELETE = withErrorHandler(async function (req, { params }) {
 
   const data = transactionMapper(deletedTransaction);
 
-  return Response.json({ data }, {status: 202});
+  return Response.json({ data }, { status: status.HTTP_STATUS_ACCEPTED });
 });

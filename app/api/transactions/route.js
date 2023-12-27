@@ -1,9 +1,10 @@
 import prisma from '@/lib/prisma';
+import * as status from '@/lib/http.status';
 import withErrorHandler from '@/lib/error.handler';
 import { getFilters, getOrdering, getPagination } from '@/lib/filters';
 
-import { transactionCreateValidator, transactionFilterValidator } from './validators';
 import { transactionMapper } from './mappers';
+import { transactionCreateValidator, transactionFilterValidator } from './validators';
 
 export const GET = withErrorHandler(async function (req) {
   const pagination = getPagination(req);
@@ -19,7 +20,7 @@ export const GET = withErrorHandler(async function (req) {
 
   const data = transactions.map(transactionMapper);
 
-  return Response.json({ count, data });
+  return Response.json({ count, data }, { status: status.HTTP_STATUS_OK });
 });
 
 export const POST = withErrorHandler(async function (req) {
@@ -47,5 +48,5 @@ export const POST = withErrorHandler(async function (req) {
 
   const data = transactionMapper({ ...transaction, tags,  });
 
-  return Response.json({ data }, {status:201});
+  return Response.json({ data }, { status: status.HTTP_STATUS_CREATED });
 });
