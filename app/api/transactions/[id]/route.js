@@ -1,13 +1,23 @@
+import { z } from 'zod';
+
 import prisma from '@/lib/prisma';
 import withErrorHandler from '@/lib/error.handler';
 
 import { transactionIdValidator, transactionUpdateValidator } from '../validators';
+import { transactionMapper } from '../mappers';
 
 
 export const GET = withErrorHandler(async function (req, { params }) {
-  const transaction = await transactionIdValidator.parseAsync(params.id);
+  const id = z.string().uuid().parse(params.id);
 
-  return Response.json({data: transaction}, {status: 200});
+  const transaction = await prisma.transaction.findUniqueOrThrow({
+    where: { id },
+    include: { tags: { include: { tag: true } } },
+  });
+
+  const data = transactionMapper(transaction);
+
+  return Response.json({ data }, {status: 200});
 });
 
 
@@ -23,11 +33,39 @@ function updateHandler(partial) {
 
     const validator = partial ? transactionUpdateValidator.partial() : transactionUpdateValidator;
 
-    const data = await validator.parseAsync(jsonData);
+    const { tags, ...validatedData } = await validator.parseAsync(jsonData);
 
-    const updatedTransaction = await prisma.transaction.update({ data, where: { id: transaction.id } });
+    const prismaTransaction = async tx => {
+      if (tags) {
+        await tx.transaction_tag.createMany({
+          data: [
+            ...tags.map(tag => ({ transaction_id: transaction.id, tag_id: tag.id })),
+          ],
+          skipDuplicates: true,
+        });
 
-    return Response.json({data: updatedTransaction}, {status: 200});
+        await tx.transaction_tag.deleteMany({
+          where: {
+            transaction_id: validatedData.id,
+            NOT: {
+              tag_id: { in: [...tags.map(tag => tag.id)] },
+            }
+          }
+        });
+      }
+
+      return await tx.transaction.update({
+        data: validatedData,
+        where: { id: transaction.id },
+        include: { tags: { include: { tag: true } } },
+      });
+    };
+
+    const updatedTransaction = await prisma.$transaction(prismaTransaction);
+
+    const data = transactionMapper(updatedTransaction);
+
+    return Response.json({ data }, {status: 200});
   });
 }
 
@@ -41,7 +79,12 @@ export const PATCH = updateHandler(true);
 export const DELETE = withErrorHandler(async function (req, { params }) {
   const transaction = await transactionIdValidator.parseAsync(params.id);
 
-  const deletedTransaction = await prisma.transaction.delete({ where: { id: transaction.id } });
+  const deletedTransaction = await prisma.transaction.delete({
+    where: { id: transaction.id },
+    include: { tags: { include: { tag: true } } },
+  });
 
-  return Response.json({data: deletedTransaction}, {status: 202});
+  const data = transactionMapper(deletedTransaction);
+
+  return Response.json({ data }, {status: 202});
 });
