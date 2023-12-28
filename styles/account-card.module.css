@@ -1,0 +1,8 @@
+.accountCard {
+    @apply w-60 lg:w-80 flex flex-col px-4 p-2 bg-slate-900 bg-opacity-30 rounded-md border-[1px] border-slate-600;
+    backdrop-filter: blur(20px);
+  }
+
+.accountCard.active {
+    @apply bg-slate-800 border-2 border-slate-400;
+  }
