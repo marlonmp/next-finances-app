@@ -11,6 +11,8 @@
 body {
   color: theme('colors.slate.200');
 
+  color-scheme: dark;
+
   background: theme('colors.neutral.950');
   background: linear-gradient(150deg, theme('colors.neutral.950') 0%, theme('colors.slate.900') 100%);
 
