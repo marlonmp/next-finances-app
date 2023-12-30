@@ -1,6 +1,4 @@
-import dynamic from 'next/dynamic';
-
-const AccountList = dynamic(() => import('./components/accountList'), { ssr: false });
+import AccountList from'./components/accountList';
 
 export default async function Transactions () {
   const res = await fetch('http://localhost:3000/api/accounts', { cache: 'no-store' });
