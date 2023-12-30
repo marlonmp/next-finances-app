@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import '@/styles/material-symbols/rounded.css';
 
 import HeaderLink from '@/app/components/HeaderLink';
 import Header from '@/app/components/Header';
