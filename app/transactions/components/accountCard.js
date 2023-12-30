@@ -19,7 +19,10 @@ export default function AccountCard({ account, active = false, tabIndex, onClick
 
   return (
     <div className={className} tabIndex={tabIndex} onClick={onClick}>
-      <div className='font-bold text-xl'>{account.name}</div>
+      <div className='flex flex-row flex-nowrap justify-between'>
+        <div className='font-bold text-xl'>{account.name}</div>
+        <span className='material-symbols-rounded !text-[18px]'>edit</span>
+      </div>
       <div className='text-md'>{account.type}</div>
       <div className='self-end mt-4 font-black text-lg text-slate-200'>{currencyMapper(account.balance)}</div>
       <div className='self-end text-xs text-slate-600'>
