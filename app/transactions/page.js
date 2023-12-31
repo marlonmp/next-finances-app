@@ -1,19 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
-import AccountList from'./components/accountList';
+import AccountList from './components/accountList';
+import TransactionList from './components/transactionList';
 
-export default function Transactions () {
+export default function Transactions() {
   const [account, setAccount] = useState(null);
 
   return (
-    <div className='flex flex-col items-center gap-6'>
-      <AccountList onSelect={setAccount}/>
+    <div className='flex flex-col items-center gap-8'>
+      <div className='w-full'>
+        <div className='w-full text-md mb-4'>Accounts</div>
 
-      <div className='w-11/12 h-px bg-slate-600'></div>
+        <AccountList onSelect={setAccount} />
+      </div>
 
-      {account?.name}
+      <div className='w-full'>
+        <div className='w-full text-md mb-4'>Transactions</div>
+
+        <Suspense fallback={<>...loading transactions</>}>
+          <TransactionList account_id=''/>
+        </Suspense>
+      </div>
     </div>
   );
 }
