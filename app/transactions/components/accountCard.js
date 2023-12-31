@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { currencyMapper, dateTimeMapper } from '@/lib/mappers';
 
 import styles from '@/styles/account-card.module.css';
+import DateTime from '@/app/components/DateTime';
+
+import { useSearchParams, useRouter } from 'next/navigation';
 
 
 export function AccountCardSkeleton() {
@@ -27,12 +28,19 @@ export function AccountCardSkeleton() {
  * @param {{ account, active: boolean = false, tabIndex?: number }} props
  * @returns {JSX.Element}
  */
-export default function AccountCard({ account, active = false, tabIndex, onClick }) {
-  const activeClass = active ? styles.active : '';
+export default function AccountCard({ account, tabIndex }) {
+  const searchParams = useSearchParams() || {};
+  const account_id = searchParams.get('account_id');
+
+  const activeClass = account_id === account.id ? styles.active : '';
   const className = `${styles.accountCard} ${activeClass}`;
 
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => setIsMounted(true), []);
+  const { push } = useRouter();
+
+  function onClick() {
+    const searchParams = new URLSearchParams({ account_id: account.id });
+    push(`/transactions?${searchParams}`);
+  }
 
   return (
     <div className={className} tabIndex={tabIndex} onClick={onClick}>
@@ -43,7 +51,7 @@ export default function AccountCard({ account, active = false, tabIndex, onClick
       <div className='text-md'>{account.type}</div>
       <div className='self-end mt-4 font-black text-lg text-slate-200'>{currencyMapper(account.balance)}</div>
       <div className='self-end text-xs text-slate-600'>
-        <time dateTime={account.updated_at}>Last update at: {isMounted ? dateTimeMapper(account.updated_at) : '...'}</time>
+        <DateTime dateTime={account.updated_at}>Last update at: {dateTimeMapper(account.updated_at)}</DateTime>
       </div>
     </div>
   );
