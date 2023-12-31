@@ -8,8 +8,8 @@ export default function AccountList({ accounts = [] }) {
   const [selected, setSelected] = useState(null);
 
   const emptyList = (
-    <div className='w-full h-40 flex justify-center'>
-      <div className='self-center italic text-slate-400'>There are not accounts to list</div>
+    <div className='col-span-full min-h-40 flex items-center justify-center'>
+      <div className='italic text-slate-400'>There are not accounts to list, try adding one</div>
     </div>
   );
 
@@ -21,15 +21,9 @@ export default function AccountList({ accounts = [] }) {
     );
   }
 
-  const accountCardsList = (
-    <div className='w-max flex flex-row flex-nowrap gap-6'>
-      {accounts.map(accountCardMapper)}
-    </div>
-  );
-
   return (
-    <div className='overflow-x-auto p-1 pb-4'>
-      {!!accounts?.length ? accountCardsList : emptyList}
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+      {!accounts?.length ? emptyList : accounts.map(accountCardMapper)}
     </div>
   );
 }
