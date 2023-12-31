@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
           <HeaderLink label='Statistics' href='/statistics'/>
         </Header>
 
-        <div className='w-11/12 lg:w-1/2 mx-auto mt-12'>
+        <div className='w-11/12 xl:max-w-7xl mx-auto mt-12'>
           {children}
         </div>
 
