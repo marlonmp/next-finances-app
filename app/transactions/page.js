@@ -1,12 +1,19 @@
+'use client';
+
+import { useState } from 'react';
+
 import AccountList from'./components/accountList';
 
-export default async function Transactions () {
-  const res = await fetch('http://localhost:3000/api/accounts', { cache: 'no-store' });
-  const { data: accounts } = await res.json();
+export default function Transactions () {
+  const [account, setAccount] = useState(null);
 
   return (
-    <div>
-      <AccountList accounts={accounts}/>
+    <div className='flex flex-col items-center gap-6'>
+      <AccountList onSelect={setAccount}/>
+
+      <div className='w-11/12 h-px bg-slate-600'></div>
+
+      {account?.name}
     </div>
   );
 }
