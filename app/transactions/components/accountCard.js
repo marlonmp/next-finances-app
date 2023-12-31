@@ -3,7 +3,24 @@
 import { useEffect, useState } from 'react';
 
 import { currencyMapper, dateTimeMapper } from '@/lib/mappers';
+
 import styles from '@/styles/account-card.module.css';
+
+
+export function AccountCardSkeleton() {
+  return (
+    <div className='min-w-60 p-4 flex flex-col gap-2 rounded-md border-[1px] border-slate-600 bg-slate-800 animate-pulse'>
+      <div className='flex flex-row flex-nowrap justify-between'>
+        <div className='w-40 h-6 font-bold rounded-md bg-slate-600'></div>
+        <span className='w-6 h-6 rounded-md bg-slate-700'></span>
+      </div>
+      <div className='w-20 h-3 rounded-md bg-slate-700'></div>
+      <div className='w-28 h-7 mt-4 self-end rounded-md bg-slate-600'></div>
+      <div className='w-48 h-3 self-end rounded-md bg-slate-700'></div>
+    </div>
+  );
+};
+
 
 /**
  * Account card
