@@ -1,7 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
 import AccountCard, { AccountCardSkeleton } from './accountCard';
 
 export function AccountListSkeleton() {
@@ -26,30 +22,14 @@ const emptyList = (
   </div>
 );
 
-export default function AccountList({ onSelect }) {
-  const [accounts, setAccounts] = useState(null);
-  const [selected, setSelected] = useState(null);
-
-  useEffect(() => {
-    getAccounts().then(accounts => {
-      setAccounts(accounts);
-      setSelected(accounts[0]);
-    });
-  }, []);
-
-  if (accounts === null) {
-    return <AccountListSkeleton />;
-  }
+export default async function AccountList() {
+  const accounts = await getAccounts();
 
   return (
     <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
       {!accounts?.length ?
         emptyList :
-        accounts?.map((account, i) => <AccountCard
-          key={account.id} tabIndex={i + 1}
-          account={account} active={selected?.id === account.id}
-          onClick={() => { setSelected({...account}); onSelect?.(account); }}
-        />)}
+        accounts?.map((account, i) => <AccountCard key={account.id} tabIndex={i + 1} account={account} />)}
     </div>
   );
 }
