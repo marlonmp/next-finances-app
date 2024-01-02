@@ -9,18 +9,18 @@ export const GET = withErrorHandler(async function (req, { params }) {
   const account = await accountIdValidator.parseAsync(params.id);
 
   const { _sum: { amount: expenses } } = await prisma.transaction.aggregate({
-    _sum: { amount: true },
-    where: { account_id: account.id, type: 'expense' }
+    _sum:  { amount: true },
+    where: { account_id: account.id, type: 'expense' },
   });
 
   const { _sum: { amount: incomes } } = await prisma.transaction.aggregate({
-    _sum: { amount: true },
-    where: { account_id: account.id, type: 'income' }
+    _sum:  { amount: true },
+    where: { account_id: account.id, type: 'income' },
   });
 
   const balance = (incomes || 0) - (expenses || 0);
 
-  return Response.json({data: { ...account, balance }}, { status: status.HTTP_STATUS_OK });
+  return Response.json({ data: { ...account, balance } }, { status: status.HTTP_STATUS_OK });
 });
 
 

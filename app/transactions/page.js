@@ -1,10 +1,7 @@
 'use client';
 
-import { Suspense } from 'react';
-
-import AccountList, { AccountListSkeleton } from './components/accountList';
-
-import TransactionList, { TransactionListSkeleton } from './components/transactionList';
+import AccountList from './components/accountList';
+import TransactionList from './components/transactionList';
 
 export default function Transactions({ searchParams }) {
   const { account_id } = searchParams || {};

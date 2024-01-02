@@ -5,7 +5,7 @@ import { clearString } from '@/lib/utils';
 
 export const tagIdValidator = z.string()
   .uuid()
-  .transform(async id => await prisma.tag.findUniqueOrThrow({ where: { id }}));
+  .transform(async id => await prisma.tag.findUniqueOrThrow({ where: { id } }));
 
 const name = z.string()
   .max(32)

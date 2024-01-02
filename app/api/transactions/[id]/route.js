@@ -12,7 +12,7 @@ export const GET = withErrorHandler(async function (req, { params }) {
   const id = z.string().uuid().parse(params.id);
 
   const transaction = await prisma.transaction.findUniqueOrThrow({
-    where: { id },
+    where:   { id },
     include: { tags: { include: { tag: true } } },
   });
 
@@ -48,16 +48,16 @@ function updateHandler(partial) {
         await tx.transaction_tag.deleteMany({
           where: {
             transaction_id: validatedData.id,
-            NOT: {
+            NOT:            {
               tag_id: { in: [...tags.map(tag => tag.id)] },
-            }
-          }
+            },
+          },
         });
       }
 
       return await tx.transaction.update({
-        data: validatedData,
-        where: { id: transaction.id },
+        data:    validatedData,
+        where:   { id: transaction.id },
         include: { tags: { include: { tag: true } } },
       });
     };
@@ -81,7 +81,7 @@ export const DELETE = withErrorHandler(async function (req, { params }) {
   const transaction = await transactionIdValidator.parseAsync(params.id);
 
   const deletedTransaction = await prisma.transaction.delete({
-    where: { id: transaction.id },
+    where:   { id: transaction.id },
     include: { tags: { include: { tag: true } } },
   });
 

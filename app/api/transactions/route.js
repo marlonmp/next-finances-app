@@ -15,7 +15,7 @@ export const GET = withErrorHandler(async function (req) {
 
   const transactions = await prisma.transaction.findMany({
     ...pagination, ...ordering, ...filters,
-    include: { tags: { include: { tag: true } } },
+    include: { tags: { include: { tag: true } }, account: { select: { id: true, name: true } } },
   });
 
   const data = transactions.map(transactionMapper);
@@ -30,7 +30,7 @@ export const POST = withErrorHandler(async function (req) {
 
   const prismaTransaction = async tx => {
     const transaction = await tx.transaction.create({
-      data: validatedData,
+      data:    validatedData,
       include: { tags: { include: { tag: true } } },
     });
 
@@ -46,7 +46,7 @@ export const POST = withErrorHandler(async function (req) {
 
   const transaction = await prisma.$transaction(prismaTransaction);
 
-  const data = transactionMapper({ ...transaction, tags,  });
+  const data = transactionMapper({ ...transaction, tags });
 
   return Response.json({ data }, { status: status.HTTP_STATUS_CREATED });
 });

@@ -1,5 +1,5 @@
-import DateTime from '@/app/components/DateTime';
 import { currencyMapper, dateTimeMapper } from '@/lib/mappers';
+import DateTime from '@/app/components/DateTime';
 
 export function TagBadgeSkeleton() {
   return (
