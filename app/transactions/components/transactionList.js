@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import TransactionTile, { TransactionTileSkeleton } from './transactionTile';
 
 export function TransactionListSkeleton() {
@@ -27,8 +30,18 @@ const emptyList = (
   </div>
 );
 
-export default async function TransactionList({ account_id }) {
-  const transactions = await getTransactions({ account_id });
+export default function TransactionList({ account_id }) {
+  const [transactions, setTransacttions] = useState(null);
+
+  useEffect(() => {
+    setTransacttions(null);
+    getTransactions({ account_id })
+      .then(transactions => setTransacttions(transactions));
+  }, [account_id]);
+
+  if (transactions === null) {
+    return <TransactionListSkeleton />;
+  }
 
   return (
     <div className='w-full flex flex-col divide-y-2 divide-slate-800 border-2 border-slate-800 rounded-lg'>

@@ -13,17 +13,13 @@ export default function Transactions({ searchParams }) {
     <div className='flex flex-col items-center gap-8'>
       <div className='w-full'>
         <div className='w-full text-md mb-4'>Accounts</div>
-        <Suspense fallback={<AccountListSkeleton />}>
-          <AccountList key={'accountlist'} />
-        </Suspense>
+        <AccountList key={'accountlist'} />
       </div>
 
       <div className='w-full'>
         <div className='w-full text-md mb-4'>Transactions</div>
 
-        <Suspense key={account_id?.toString() ?? 'suspense_transactrions'} fallback={<TransactionListSkeleton />}>
-          <TransactionList account_id={account_id} />
-        </Suspense>
+        <TransactionList account_id={account_id} />
       </div>
     </div>
   );
