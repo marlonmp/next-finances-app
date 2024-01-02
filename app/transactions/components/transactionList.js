@@ -45,7 +45,7 @@ export default function TransactionList({ account_id }) {
 
   return (
     <div className='w-full flex flex-col divide-y-2 divide-slate-800 border-2 border-slate-800 rounded-lg'>
-      {!transactions?.length ? emptyList : transactions.map((transaction, i) => <TransactionTile key={i} transaction={transaction} />)}
+      {!transactions?.length ? emptyList : transactions?.map((transaction, i) => <TransactionTile key={i} transaction={transaction} />)}
     </div>
   );
 }
