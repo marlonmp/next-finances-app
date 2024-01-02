@@ -1,0 +1,10 @@
+.accountCard {
+    @apply min-w-60 flex flex-col p-4 bg-slate-950 bg-opacity-30 rounded-md border-[1px] border-slate-700
+    select-none cursor-pointer focus:outline-none hover:ring-1 hover:ring-slate-700 focus:ring-1 focus:ring-slate-600;
+
+    backdrop-filter: blur(20px);
+  }
+
+.accountCard.active {
+    @apply bg-slate-900 border-[1px] border-slate-500;
+  }

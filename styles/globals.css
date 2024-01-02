@@ -11,6 +11,8 @@
 body {
   color: theme('colors.slate.200');
 
+  color-scheme: dark;
+
   background: theme('colors.neutral.950');
   background: linear-gradient(150deg, theme('colors.neutral.950') 0%, theme('colors.slate.900') 100%);
 
@@ -18,4 +20,16 @@ body {
   background-attachment: fixed;
 
   height: 100%;
+}
+
+::-webkit-scrollbar {
+  @apply w-[6px] h-[6px];
+}
+
+::-webkit-scrollbar-track {
+  @apply rounded-[1px] bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-sm cursor-move bg-slate-700 hover:bg-slate-600 ;
 }

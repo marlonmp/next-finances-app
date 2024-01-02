@@ -6,11 +6,11 @@ import { z } from 'zod';
 
 export const transactionIdValidator = z.string()
   .uuid()
-  .transform(async id => await prisma.transaction.findUniqueOrThrow({ where: { id }}));
+  .transform(async id => await prisma.transaction.findUniqueOrThrow({ where: { id } }));
 
 const account = z.string()
   .uuid()
-  .transform(async id => await prisma.account.findUnique({where: {id}}))
+  .transform(async id => await prisma.account.findUnique({ where: { id } }))
   .refine(account => !!account, { message: 'Not account found' });
 
 const accountConnect = account.transform(account => ({ connect: { id: account.id } }));
@@ -25,7 +25,7 @@ const type = z.enum(Object.values(transactiontype));
 
 const tags = z.string()
   .uuid()
-  .transform(async id => await prisma.tag.findUnique({where: {id}}))
+  .transform(async id => await prisma.tag.findUnique({ where: { id } }))
   .refine(tag => !!tag, { message: 'Not tag found' })
   .array()
   // remove repeated objects
@@ -36,7 +36,7 @@ const tags = z.string()
   .optional();
 
 export const transactionFilterValidator = z.object({
-  account_id: account.transform(account => account.id),
+  account_id:     account.transform(account => account.id),
   account_id__in: z.string()
     .transform(ids => ids.split(','))
     .pipe(account.array())

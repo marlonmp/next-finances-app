@@ -1,7 +1,0 @@
-.headerLink {
-    @apply px-4 py-2 rounded-md cursor-pointer text-slate-600 hover:text-blue-400 hover:bg-blue-950
-  }
-  
-.headerLink.active {
-    @apply text-slate-200
-  }

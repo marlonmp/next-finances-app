@@ -12,8 +12,6 @@ EXPOSE ${NODE_PORT}
 COPY package.json .
 COPY yarn.lock .
 
-RUN yarn install
-
 COPY . .
 
-CMD yarn dev -p ${NODE_PORT}
+CMD yarn install && yarn dev -p ${NODE_PORT}

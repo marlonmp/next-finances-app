@@ -4,6 +4,7 @@ import withErrorHandler from '@/lib/error.handler';
 import { getFilters, getOrdering, getPagination } from '@/lib/filters';
 
 import { accountCreateValidator, accountFilterValidator } from './validators';
+import { accountMapper } from './mappers';
 
 export const GET = withErrorHandler(async function (req) {
   const pagination = getPagination(req);
@@ -12,9 +13,13 @@ export const GET = withErrorHandler(async function (req) {
 
   const count = await prisma.account.count(filters);
 
-  const accounts = await prisma.account.findMany({ ...pagination, ...ordering, ...filters });
+  const include = { transactions: { select: { amount: true, type: true } } };
 
-  return Response.json({ count, data: [...accounts] }, { status: status.HTTP_STATUS_OK });
+  const accounts = await prisma.account.findMany({ ...pagination, ...ordering, ...filters, include });
+
+  const data = accounts.map(accountMapper);
+
+  return Response.json({ count, data }, { status: status.HTTP_STATUS_OK });
 });
 
 export const POST = withErrorHandler(async function (req) {

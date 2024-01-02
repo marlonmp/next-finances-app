@@ -1,6 +1,6 @@
 'use client';
 
-import stryles from '@/styles/components.module.css';
+import stryles from '@/styles/header-link.module.css';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
