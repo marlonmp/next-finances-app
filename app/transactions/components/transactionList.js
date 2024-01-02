@@ -26,7 +26,7 @@ async function getTransactions({ account_id }) {
 
 const emptyList = (
   <div className='flex justify-center items-center'>
-    There are no transactions found, try adding one
+    <div className='italic py-12 text-slate-400'>There are no transactions found, try adding one</div>
   </div>
 );
 
