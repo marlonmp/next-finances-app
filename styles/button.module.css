@@ -1,5 +1,0 @@
-.button {
-  @apply w-min p-2 rounded-md flex flex-row flex-nowrap justify-around items-center gap-x-2 focus:ring-4
-  focus:outline-none disabled:opacity-75;
-}
-
