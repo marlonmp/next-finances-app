@@ -9,7 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "^7.4.0",
+    "@mantine/dates": "^7.4.0",
+    "@mantine/form": "^7.4.0",
+    "@mantine/hooks": "^7.4.0",
+    "@mantine/modals": "^7.4.0",
     "@prisma/client": "5.7.1",
+    "@tabler/icons-react": "^2.45.0",
+    "dayjs": "^1.11.10",
     "moment-timezone": "^0.5.44",
     "next": "14.0.4",
     "react": "^18",
