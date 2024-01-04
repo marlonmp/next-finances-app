@@ -1,4 +1,7 @@
 import '@/styles/globals.css';
+import '@mantine/core/styles.css';
+
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 import Header from '@/app/components/Header';
 import HeaderLink from '@/app/components/HeaderLink';
@@ -11,6 +14,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
+      <head>
+        <ColorSchemeScript />
+      </head>
+
       <body>
         <Header title='Finances'>
           <HeaderLink label='Home' href='/home' />
@@ -19,7 +26,7 @@ export default function RootLayout({ children }) {
         </Header>
 
         <div className='w-11/12 xl:max-w-7xl mx-auto my-12'>
-          {children}
+          <MantineProvider defaultColorScheme='dark'>{children}</MantineProvider>
         </div>
       </body>
     </html>
