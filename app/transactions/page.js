@@ -2,9 +2,6 @@
 
 import { useState } from 'react';
 
-import Button from '@mui/material/Button';
-import { Add } from '@mui/icons-material';
-
 import AccountList from './components/accountList';
 import TransactionList from './components/transactionList';
 
@@ -21,9 +18,7 @@ export default function Transactions({ searchParams }) {
         <div className='w-full mb-6 flex flex-row justify-between items-center'>
           <div className=' text-md'>Accounts</div>
 
-          <Button variant='contained' color='success' startIcon={<Add />} onClick={() => setAccountModal(true)}>
-            Add account
-          </Button>
+          <button>Add account</button>
         </div>
 
         <AccountList key={'accountlist'} />
@@ -33,9 +28,7 @@ export default function Transactions({ searchParams }) {
         <div className='w-full mb-6 flex flex-row justify-between items-center'>
           <div className='text-md'>Transactions</div>
 
-          <Button variant='contained' color='success' startIcon={<Add />}>
-            Add transaction
-          </Button>
+          <button>Add transaction</button>
         </div>
 
         <TransactionList account_id={account_id} />
