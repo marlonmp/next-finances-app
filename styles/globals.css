@@ -33,8 +33,3 @@ body {
 ::-webkit-scrollbar-thumb {
   @apply rounded-sm cursor-move bg-slate-700 hover:bg-slate-600 ;
 }
-
-/* Material ui */
-button {
-  text-transform: none !important;
-}
