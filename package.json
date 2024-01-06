@@ -17,6 +17,7 @@
     "@prisma/client": "5.7.1",
     "@tabler/icons-react": "^2.45.0",
     "dayjs": "^1.11.10",
+    "mantine-form-zod-resolver": "^1.1.0",
     "moment-timezone": "^0.5.44",
     "next": "14.0.4",
     "react": "^18",
