@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma';
 import * as status from '@/lib/http.status';
 import withErrorHandler from '@/lib/error.handler';
 
-import { accountIdValidator, accountUpdateValidator } from '../validators';
+import { accountIdValidator, accountUpdateValidator } from '@/lib/zod/account';
 
 
 export const GET = withErrorHandler(async function (req, { params }) {

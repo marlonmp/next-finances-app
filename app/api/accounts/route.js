@@ -3,7 +3,7 @@ import * as status from '@/lib/http.status';
 import withErrorHandler from '@/lib/error.handler';
 import { getFilters, getOrdering, getPagination } from '@/lib/filters';
 
-import { accountCreateValidator, accountFilterValidator } from './validators';
+import { accountCreateValidator, accountFilterValidator } from '@/lib/zod/account';
 import { accountMapper } from './mappers';
 
 export const GET = withErrorHandler(async function (req) {
