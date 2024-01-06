@@ -8,11 +8,19 @@ import AccountList from './components/accountList';
 import TransactionList from './components/transactionList';
 
 import AccountModal from './components/accountModal';
+import { useRouter } from 'next/navigation';
 
 export default function Transactions({ searchParams }) {
   const { account_id } = searchParams || {};
 
+  const router = useRouter();
+
   const [accountModalOpened, accountModal] = useDisclosure(false);
+
+  function onSubmit(account) {
+    const params = new URLSearchParams({ account_id: account.id });
+    router.push(`transactions?${params}`);
+  }
 
   return (
     <div className='flex flex-col items-center gap-8'>
@@ -36,7 +44,7 @@ export default function Transactions({ searchParams }) {
         <TransactionList account_id={account_id} />
       </div>
 
-      <AccountModal opened={accountModalOpened} onClose={accountModal.close} />
+      <AccountModal opened={accountModalOpened} onClose={accountModal.close} onSubmit={onSubmit} />
     </div>
   );
 }
