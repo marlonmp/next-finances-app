@@ -35,7 +35,7 @@ export default function AccountList() {
   }
 
   return (
-    <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+    <div className='w-full max-h-80 pr-1 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
       {!accounts?.length ?
         emptyList :
         accounts?.map((account, i) => <AccountCard key={account.id} tabIndex={i + 1} account={account} />)}
