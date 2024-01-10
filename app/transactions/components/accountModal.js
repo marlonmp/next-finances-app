@@ -3,6 +3,7 @@ import { Modal, Button, Box, TextInput, Select } from '@mantine/core';
 import { IconCircleX, IconId, IconPig, IconDeviceFloppy, IconWallet } from '@tabler/icons-react';
 
 import { accountCreateValidator } from '@/lib/zod/account';
+import { useEffect } from 'react';
 
 const initialAccountValues = { name: '', type: null };
 
@@ -13,41 +14,48 @@ const accountTypes = [
 
 /**
  * This component is a form to create or update accounts
- * @param {{
- *  opened: boolean = false,
- *  type: 'create' | 'update' |'retrieve' = 'create',
- *  account?: object,
- *  onClose?: () => void,
- *  onSubmit?: (account: object) => void
- * }} props
+ * @param {{ opened: boolean = false, account?: object, onClose?: () => void,
+ * onSubmit?: (account: object) => void }} props
  */
-export default function AccountModal({ opened = false, type = 'create', account, onClose, onSubmit }) {
+export default function AccountModal({ opened = false, account, onClose, onSubmit }) {
   const title = (
     <div className='flex flex-row flex-nowrap items-center gap-x-2'>
       <IconWallet />
-      <div>Create account</div>
+      <div>{account ? 'Update account' : 'Create account'}</div>
     </div>
   );
 
   const form = useForm({
     name:                  'account-form',
     validateInputOnChange: true,
-    initialValues:         { ...(account || initialAccountValues) },
+    initialValues:         { ...initialAccountValues },
     validate:              zodResolver(accountCreateValidator),
   });
+
+  useEffect(() => {
+    if (account) form.initialize(account);
+  }, [account]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function _onClose() {
+    onClose();
+    form.reset();
+  }
 
   async function _onSubmit(event) {
     event.preventDefault();
     const res = await fetch('http://localhost:3000/api/accounts', { method: 'POST', body: JSON.stringify(form.values) });
     const { data } = await res.json();
-    onClose();
+    _onClose();
+    form.reset();
     onSubmit?.(data);
   }
 
   return (
     <>
-      <Modal centered opened={opened} onClose={onClose} title={title}>
+      <Modal centered opened={opened} onClose={_onClose} title={title}>
         <Box max={340}>
+          {JSON.stringify(account)}
+
           <form onSubmit={_onSubmit} className='flex flex-col gap-y-4'>
             <TextInput withAsterisk required label='Name' placeholder='Bancolombia' leftSection={<IconId size={14} />}
               {...form.getInputProps('name')} />
@@ -61,7 +69,7 @@ export default function AccountModal({ opened = false, type = 'create', account,
                 Submit
               </Button>
 
-              <Button color='red' leftSection={<IconCircleX />} onClick={onClose}>Cancel</Button>
+              <Button color='red' leftSection={<IconCircleX />} onClick={_onClose}>Cancel</Button>
             </div>
           </form>
         </Box>
